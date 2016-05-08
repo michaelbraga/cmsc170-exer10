@@ -107,11 +107,8 @@ public class TicTacToe {
 		else {
 			for (int i=0; i<3; i+=1) {
 				for (int j=0; j<3; j+=1) {
-					if (this.matrix[i][j] == '-') {
+					if (this.matrix[i][j] == '-')
 						return '-';
-					}
-				}
-			}
 			return 'D';
 		}
 	}
