@@ -105,8 +105,8 @@ public class TicTacToe {
 		else if((this.matrix[0][2] == 'X' && this.matrix[1][1] == 'X' && this.matrix[2][0] == 'X') || (this.matrix[0][2] == 'O' && this.matrix[1][1] == 'O' && this.matrix[2][0] == 'O'))
 			return this.matrix[0][2];
 		else {
-			for (int i=0; i<3; i+=1) {
-				for (int j=0; j<3; j+=1) {
+			for (int i=0; i<3; i+=1) 
+				for (int j=0; j<3; j+=1) 
 					if (this.matrix[i][j] == '-')
 						return '-';
 			return 'D';
