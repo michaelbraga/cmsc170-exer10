@@ -78,7 +78,7 @@ public class TicTacToe {
 		switch (winner) {
 			case 'X': return HUMAN;
 			case 'O': return COMPUTER;
-			case 'D': System.out.println("Game end with a draw!"); return 0;
+			case 'D': System.out.println("Game ends with a draw!"); return 0;
 			default: System.out.println("Game Error!"); return -404;
 		}
 	}
