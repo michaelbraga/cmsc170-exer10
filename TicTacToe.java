@@ -5,8 +5,8 @@ import java.util.*;
 */
 public class TicTacToe {
 	private char[][] matrix = new char[3][3];
-	private static int HUMAN = -1;
-	private static int COMPUTER = 1;
+	public static int HUMAN = -1024;
+	public static int COMPUTER = 1024;
 
 	public TicTacToe(){
 		InitializeMatrix();
@@ -41,16 +41,18 @@ public class TicTacToe {
 		char winner;
 
 		System.out.println("Who makes the first move? [-1 - you, 1 - computer]");
-		if ((player = in.nextInt()) == HUMAN) {
+		if ((player = (in.nextInt() == -1)? HUMAN:COMPUTER) == HUMAN) {
 			System.out.println("You take the first move.");
 		}
 		else {
 			System.out.println("Computer takes the first move.");
+			MakeMove(new Random().nextInt(3), new Random().nextInt(3), player);
+			player = (player == HUMAN)? COMPUTER : HUMAN;
 		}
 
 		int x=0, y=0; Point computerMove;
 		PrintMatrix();
-		while((winner = StillPlaying()) == '-'){
+		while((winner = StillPlaying(this.matrix)) == '-'){
 			System.out.println("==================================");
 			if (player == HUMAN) {
 				System.out.println("Enter x coordinate");
@@ -59,7 +61,7 @@ public class TicTacToe {
 				y = in.nextInt();
 				System.out.println("You made a move.");
 			}
-			else if(player == 1) {
+			else if(player == COMPUTER) {
 				computerMove = computer.AnalyzeMatrix(this.matrix);
 				x = (int) computerMove.getX();
 				y = (int) computerMove.getY();
@@ -70,7 +72,6 @@ public class TicTacToe {
 				// switch player
 				player = (player == HUMAN)? COMPUTER : HUMAN;
 			}
-			System.out.println("==================================");
 			PrintMatrix();
 		}
 
@@ -82,39 +83,47 @@ public class TicTacToe {
 		}
 	}
 
-	public char StillPlaying(){
+	public static char StillPlaying(char[][] matrix){
 		// horizontal
-		if((this.matrix[0][0] == 'X' && this.matrix[0][1] == 'X' && this.matrix[0][2] == 'X') || (this.matrix[0][0] == 'O' && this.matrix[0][1] == 'O' && this.matrix[0][2] == 'O'))
-			return this.matrix[0][0];
-		else if((this.matrix[1][0] == 'X' && this.matrix[1][1] == 'X' && this.matrix[1][2] == 'X') || (this.matrix[1][0] == 'O' && this.matrix[1][1] == 'O' && this.matrix[1][2] == 'O'))
-			return this.matrix[1][0];
-		else if((this.matrix[2][0] == 'X' && this.matrix[2][1] == 'X' && this.matrix[2][2] == 'X') || (this.matrix[2][0] == 'O' && this.matrix[2][1] == 'O' && this.matrix[2][2] == 'O'))
-			return this.matrix[2][0];
+		if ((matrix[0][0] == 'X' && matrix[0][1] == 'X' && matrix[0][2] == 'X') ||
+			(matrix[0][0] == 'O' && matrix[0][1] == 'O' && matrix[0][2] == 'O'))
+			return matrix[0][0];
+		else if((matrix[1][0] == 'X' && matrix[1][1] == 'X' && matrix[1][2] == 'X') ||
+			(matrix[1][0] == 'O' && matrix[1][1] == 'O' && matrix[1][2] == 'O'))
+			return matrix[1][0];
+		else if((matrix[2][0] == 'X' && matrix[2][1] == 'X' && matrix[2][2] == 'X') ||
+			(matrix[2][0] == 'O' && matrix[2][1] == 'O' && matrix[2][2] == 'O'))
+			return matrix[2][0];
 
 		// vertical
-		else if((this.matrix[0][0] == 'X' && this.matrix[1][0] == 'X' && this.matrix[2][0] == 'X') || (this.matrix[0][0] == 'O' && this.matrix[1][0] == 'O' && this.matrix[2][0] == 'O'))
-			return this.matrix[0][0];
-		else if((this.matrix[0][1] == 'X' && this.matrix[1][1] == 'X' && this.matrix[2][1] == 'X') || (this.matrix[0][1] == 'O' && this.matrix[1][1] == 'O' && this.matrix[2][1] == 'O'))
-			return this.matrix[0][1];
-		else if((this.matrix[0][2] == 'X' && this.matrix[1][2] == 'X' && this.matrix[2][2] == 'X') || (this.matrix[0][2] == 'O' && this.matrix[1][2] == 'O' && this.matrix[2][2] == 'O'))
-			return this.matrix[0][2];
+		else if((matrix[0][0] == 'X' && matrix[1][0] == 'X' && matrix[2][0] == 'X') ||
+			(matrix[0][0] == 'O' && matrix[1][0] == 'O' && matrix[2][0] == 'O'))
+			return matrix[0][0];
+		else if((matrix[0][1] == 'X' && matrix[1][1] == 'X' && matrix[2][1] == 'X') ||
+			(matrix[0][1] == 'O' && matrix[1][1] == 'O' && matrix[2][1] == 'O'))
+			return matrix[0][1];
+		else if((matrix[0][2] == 'X' && matrix[1][2] == 'X' && matrix[2][2] == 'X') ||
+			(matrix[0][2] == 'O' && matrix[1][2] == 'O' && matrix[2][2] == 'O'))
+			return matrix[0][2];
 
 		// diagonal
-		else if((this.matrix[0][0] == 'X' && this.matrix[1][1] == 'X' && this.matrix[2][2] == 'X') || (this.matrix[0][0] == 'O' && this.matrix[1][1] == 'O' && this.matrix[2][2] == 'O'))
-			return this.matrix[0][0];
-		else if((this.matrix[0][2] == 'X' && this.matrix[1][1] == 'X' && this.matrix[2][0] == 'X') || (this.matrix[0][2] == 'O' && this.matrix[1][1] == 'O' && this.matrix[2][0] == 'O'))
-			return this.matrix[0][2];
+		else if((matrix[0][0] == 'X' && matrix[1][1] == 'X' && matrix[2][2] == 'X') ||
+			(matrix[0][0] == 'O' && matrix[1][1] == 'O' && matrix[2][2] == 'O'))
+			return matrix[0][0];
+		else if((matrix[0][2] == 'X' && matrix[1][1] == 'X' && matrix[2][0] == 'X') ||
+			(matrix[0][2] == 'O' && matrix[1][1] == 'O' && matrix[2][0] == 'O'))
+			return matrix[0][2];
 		else {
-			for (int i=0; i<3; i+=1) 
-				for (int j=0; j<3; j+=1) 
-					if (this.matrix[i][j] == '-')
+			for (int i=0; i<3; i+=1)
+				for (int j=0; j<3; j+=1)
+					if (matrix[i][j] == '-')
 						return '-';
 			return 'D';
 		}
 	}
 
 	public boolean MakeMove(int x, int y, int player){
-		if(this.matrix[x][y] == '-'){
+		if(x<3 && y<3 && x>=0 && y>=0 && this.matrix[x][y] == '-'){
 			this.matrix[x][y] = (player == HUMAN)? 'X':'O';
 			return true;
 		}
