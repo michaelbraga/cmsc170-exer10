@@ -28,6 +28,8 @@ public class TicTacToeUI extends JFrame {
 				button[i][j] = new JButton();
 				button[i][j].setFont(new Font("Arial", Font.BOLD, 100));
 				button[i][j].setText("");
+				button[i][j].setBackground(new Color(0, 99,128));
+				button[i][j].setForeground(Color.WHITE);
 				button[i][j].addActionListener(addAction());
 				myPanel.add(button[i][j]);
 			}
@@ -75,16 +77,6 @@ public class TicTacToeUI extends JFrame {
 										options[1]
 									);
 		return result;
-	}
-	// public clickButton(){
-
-	// // }
-
-	public static void main(String[] args){
-		TicTacToeUI labelFrame = new TicTacToeUI();
-		labelFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		labelFrame.setSize(350, 400);
-		labelFrame.setVisible(true);
 	}
 }
 
