@@ -1,9 +1,11 @@
 import java.awt.*;
 import java.util.*;
+import javax.swing.*;
+
 /*
 *	Class for the Tic-Tac-Toe game
 */
-public class TicTacToe {
+public class TicTacToe extends JFrame{
 	private char[][] matrix = new char[3][3];
 	public static int HUMAN = -1024;
 	public static int COMPUTER = 1024;
@@ -36,12 +38,19 @@ public class TicTacToe {
 
 	public int StartGame(){
 		TicTacToeAI computer = new TicTacToeAI();
+
+		TicTacToeUI labelFrame = new TicTacToeUI();
+		labelFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		labelFrame.setSize(350, 400);
+		labelFrame.setVisible(true);
+		int choice = labelFrame.getUserDialogBox();
+
 		Scanner in = new Scanner(System.in);
 		int player;
 		char winner;
 
 		System.out.println("Who makes the first move? [-1 - you, 1 - computer]");
-		if ((player = (in.nextInt() == -1)? HUMAN:COMPUTER) == HUMAN) {
+		if ((player = (choice == 0)? HUMAN:COMPUTER) == HUMAN) {
 			System.out.println("You take the first move.");
 		}
 		else {
