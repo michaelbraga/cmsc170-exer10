@@ -17,27 +17,28 @@ public class TicTacToeAI {
 		ArrayList<Point> availableMoves = getAvailableMoves(matrix);
 		Point p;
 		int max = Integer.MIN_VALUE;
-		int holder; Point best= availableMoves.get(0);
+		int holder, eval1=Integer.MIN_VALUE, eval2; Point best= availableMoves.get(0);
 		for (int i=0; i<availableMoves.size(); i+=1) {
 			p = availableMoves.get(i);
 
 			// make move
 			matrix[(int)p.getX()][(int)p.getY()] = 'O';
 			holder = value(matrix, depth+1, alpha, beta);
-
+			eval2 = evaluate(matrix);
 			// printing for testing!
 			System.out.println("Value: "+holder);
 			pMatrix(matrix);
 			// end of printing!
 
+			if (max < holder || (max==holder && eval1 < eval2)) {
+				max = holder;
+				best = p;
+				eval1 = eval2;
+			}
+
 			// reset move
 			matrix[(int)p.getX()][(int)p.getY()] = '-';
 
-
-			if (max < holder) {
-				max = holder;
-				best = p;
-			}
 		}
 		return best;
 
@@ -70,9 +71,14 @@ public class TicTacToeAI {
 	public int value(char[][] matrix, int depth, int alpha, int beta){
 		char result = TicTacToe.StillPlaying(matrix);
 
+		// if cutoff
+		if(depth == 4){
+			return evaluate(matrix);
+		}
+
 		// if utility or box
-		if (result == 'X' || result == 'O'){
-			return ((result == 'X')? -1:1);
+		else if (result == 'X' || result == 'O'){
+			return ((result == 'X')? -100:100);
 		}
 		else if (result == 'D'){
 			return 0;
@@ -131,5 +137,71 @@ public class TicTacToeAI {
 
 		}
 		return v;
+	}
+
+	public int evaluate(char[][] matrix){
+		int score = 0;
+		char[] moves = new char[2];
+		moves[0] = 'X'; moves[1] = 'O';
+
+		for(int m=0; m<2; m+=1) {
+			char move = moves[m];
+			int toAdd = ((move=='X')? -10:10), extras = ((move=='X')? -5:5);
+
+			// horizontal and vertical evaluation
+			for (int i=0; i<3; i+=1) {
+				if ((matrix[i][0]==move && matrix[i][1]==move && matrix[i][2]=='-'))
+					score += toAdd;
+				if ((matrix[i][0]=='-' && matrix[i][1]==move && matrix[i][2]==move))
+					score += toAdd;
+				if ((matrix[i][0]==move && matrix[i][1]=='-' && matrix[i][2]==move))
+					score += toAdd;
+				if ((matrix[0][i]==move && matrix[1][i]==move && matrix[2][i]=='-'))
+					score += toAdd;
+				if ((matrix[0][i]=='-' && matrix[1][i]==move && matrix[2][i]==move))
+					score += toAdd;
+				if ((matrix[0][i]==move && matrix[1][i]=='-' && matrix[2][i]==move))
+					score += toAdd;
+			}
+
+			// diagonal evaluation
+			if((matrix[0][0]==move && matrix[1][1]=='-' && matrix[2][2]==move))
+				score += toAdd;
+			else if((matrix[0][0]=='-' && matrix[1][1]==move && matrix[2][2]==move))
+				score += toAdd;
+			else if((matrix[0][0]==move && matrix[1][1]==move && matrix[2][2]=='-'))
+				score += toAdd;
+
+			if((matrix[2][0]==move && matrix[1][1]=='-' && matrix[0][2]==move))
+				score += toAdd;
+			else if((matrix[2][0]=='-' && matrix[1][1]==move && matrix[0][2]==move))
+				score += toAdd;
+			else if((matrix[2][0]==move && matrix[1][1]==move && matrix[0][2]=='-'))
+				score += toAdd;
+
+			// check for blocking
+			for (int i=0; i<3; i+=3) {
+				score += checkForBlocking(matrix[i][0], matrix[i][1], matrix[i][2]);
+				score += checkForBlocking(matrix[0][i], matrix[1][i], matrix[2][i]);
+			}
+		}
+		return score;
+	}
+	private int checkForBlocking(char x, char y, char z){
+		int score = 0;
+		if(
+			(x == 'X' && y == 'O' && z == '-') ||
+			(x == '-' && y == 'O' && z == 'X')
+		){
+			score += 2;
+		}
+
+		if(
+			(x == 'O' && y == 'X' && z == '-') ||
+			(x == '-' && y == 'X' && z == 'O')
+		){
+			score += -2;
+		}
+		return score;
 	}
 }

@@ -5,7 +5,7 @@ import javax.swing.*;
 /*
 *	Class for the Tic-Tac-Toe game
 */
-public class TicTacToe extends JFrame{
+public class TicTacToe{
 	private char[][] matrix = new char[3][3];
 	public static int HUMAN = -1024;
 	public static int COMPUTER = 1024;
@@ -39,19 +39,19 @@ public class TicTacToe extends JFrame{
 	public int StartGame(){
 		TicTacToeAI computer = new TicTacToeAI();
 
-		TicTacToeUI labelFrame = new TicTacToeUI();
-		labelFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		labelFrame.setSize(350, 400);
-		labelFrame.setVisible(true);
-		labelFrame.setLocationRelativeTo(null);
-		int choice = labelFrame.getUserDialogBox();
+		// TicTacToeUI labelFrame = new TicTacToeUI();
+		// labelFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		// labelFrame.setSize(350, 400);
+		// labelFrame.setVisible(true);
+		// labelFrame.setLocationRelativeTo(null);
+		// int choice = labelFrame.getUserDialogBox();
 
 		Scanner in = new Scanner(System.in);
 		int player;
 		char winner;
 
 		System.out.println("Who makes the first move? [-1 - you, 1 - computer]");
-		if ((player = (choice == 0)? HUMAN:COMPUTER) == HUMAN) {
+		if ((player = (in.nextInt() == 0)? HUMAN:COMPUTER) == HUMAN) {
 			System.out.println("You take the first move.");
 		}
 		else {
@@ -88,7 +88,7 @@ public class TicTacToe extends JFrame{
 		switch (winner) {
 			case 'X': return HUMAN;
 			case 'O': return COMPUTER;
-			case 'D': System.out.println("Game end with a draw!"); return 0;
+			case 'D': System.out.println("Game ends with a draw!"); return 0;
 			default: System.out.println("Game Error!"); return -404;
 		}
 	}
