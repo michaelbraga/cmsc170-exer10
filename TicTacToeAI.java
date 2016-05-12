@@ -29,11 +29,6 @@ public class TicTacToeAI {
 			matrix[(int)p.getX()][(int)p.getY()] = 'O';
 			holder = value(matrix, depth+1, alpha, beta);
 			eval2 = evaluate(matrix);
-			
-			// // printing for testing!
-			// System.out.println("Value: "+holder);
-			// PrintMatrix(matrix);
-			// // end of printing!
 
 			if (max < holder || (max==holder && eval1 < eval2)) {
 				max = holder;

@@ -1,7 +1,9 @@
 import java.awt.*;
-import java.util.*;
 import javax.swing.*;
-
+import java.util.*;
+import java.io.*;
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 /*
 *	Class for the Tic-Tac-Toe game
 */
@@ -10,6 +12,7 @@ public class TicTacToe{
 	TicTacToeAI computer;
 	static int HUMAN = -1024;
 	static int COMPUTER = 1024;
+	BufferedImage cat = null; 
 
 	public TicTacToe(){
 		InitializeMatrix();
@@ -20,6 +23,7 @@ public class TicTacToe{
 	public void StartGame(){
 		// computer ai
 		computer = new TicTacToeAI();
+
 		// ui class
 		TicTacToeUI labelFrame = new TicTacToeUI(this);
 		labelFrame.initialize();
@@ -29,7 +33,8 @@ public class TicTacToe{
 		if(player != 0){
 			int randMiddle = new Random().nextInt(3);
 			matrix[1][randMiddle] = 'O';
-			labelFrame.button[1][randMiddle].setText("O");
+			JavaImageIOTest();
+			labelFrame.button[1][randMiddle].setIcon(new ImageIcon(cat));
 		}
 	}
 
@@ -78,5 +83,12 @@ public class TicTacToe{
 						return '-';
 			return 'D';
 		}
+	}
+
+	public void JavaImageIOTest(){
+		try{
+			cat = ImageIO.read(getClass().getResource("cat.png"));
+		}
+		catch(IOException e){}
 	}
 }

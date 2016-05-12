@@ -1,6 +1,9 @@
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
+import java.io.*;
+import javax.imageio.ImageIO;
 
 /*
 *	Class for the Tic-Tac-Toe User Interface
@@ -10,9 +13,18 @@ public class TicTacToeUI extends JFrame {
 	JPanel optionPanel = new JPanel();
 	JButton button[][] = new JButton[3][3];
 	TicTacToe game;
+	BufferedImage dog = null;
+	BufferedImage cat = null;
+
+	public void JavaImageIOTest(){
+		try{
+			dog = ImageIO.read(getClass().getResource("dog.png"));
+			cat = ImageIO.read(getClass().getResource("cat.png"));
+		}
+		catch(IOException e){}
+	}
 
 	public TicTacToeUI(TicTacToe game){
-
 		//initializing panel (frame)
 		super("TIC TAC TOE");
 		setLayout(new BorderLayout());
@@ -25,6 +37,7 @@ public class TicTacToeUI extends JFrame {
 
 		this.game = game;
 
+		JavaImageIOTest();
 		// adding button
 		for(int i=0; i<3; i+=1){
 			for(int j=0; j<3; j+=1){
@@ -72,9 +85,15 @@ public class TicTacToeUI extends JFrame {
 		char result = TicTacToe.StillPlaying(this.game.matrix);
 		if (result != '-') {
 			switch (result) {
-				case 'X': System.out.println("You win!"); break;
-				case 'O': System.out.println("You lost, ew noob."); break;
-				case 'D': System.out.println("Game ends with a draw!"); break;
+				case 'X': System.out.println("You win!"); 
+							JOptionPane.showMessageDialog(myPanel, "You win!");
+							break;
+				case 'O': System.out.println("You lost, ew noob."); 
+							JOptionPane.showMessageDialog(myPanel, "You lost, ew noob.");
+							break;
+				case 'D': System.out.println("Game ends with a draw!"); 
+							JOptionPane.showMessageDialog(myPanel, "game ends with a draw!");
+							break;
 			}
 		}
 			
@@ -85,19 +104,25 @@ public class TicTacToeUI extends JFrame {
 		result = TicTacToe.StillPlaying(this.game.matrix);
 		if (result != '-') {	
 			switch (result) {
-				case 'X': System.out.println("You win!"); break;
-				case 'O': System.out.println("You lost, ew noob."); break;
-				case 'D': System.out.println("Game ends with a draw!"); break;
+				case 'X': System.out.println("You win!"); 
+							JOptionPane.showMessageDialog(myPanel, "You win!");
+							break;
+				case 'O': System.out.println("You lost, ew noob."); 
+							JOptionPane.showMessageDialog(myPanel, "You lost, ew noob.");
+							break;
+				case 'D': System.out.println("Game ends with a draw!"); 
+							JOptionPane.showMessageDialog(myPanel, "Game ends with a draw!");
+							break;
 			}	
 		}
 	}
 
 	public void makeComputerMove(Point p){
-		this.button[(int)p.getX()][(int)p.getY()].setText("O");
+		this.button[(int)p.getX()][(int)p.getY()].setIcon(new ImageIcon(cat));
 		this.game.matrix[(int)p.getX()][(int)p.getY()] = 'O';
 	}
 	public void makeHumanMove(Point p){
-		this.button[(int)p.getX()][(int)p.getY()].setText("X");
+		this.button[(int)p.getX()][(int)p.getY()].setIcon(new ImageIcon(dog));
 		this.game.matrix[(int)p.getX()][(int)p.getY()] = 'X';
 	}
 
@@ -116,9 +141,3 @@ public class TicTacToeUI extends JFrame {
 	}
 
 }
-
-/*
-make a move method for a computer
-mouseListener
-
-*/
