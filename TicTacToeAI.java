@@ -6,7 +6,11 @@ import java.util.*;
 
 public class TicTacToeAI {
 	public Point AnalyzeMatrix(char[][] matrix){
+		if (TicTacToe.StillPlaying(matrix) != '-') {
+			return null;
+		}
 		Point bestChoice;
+		
 		// alpha beta minimax
 		bestChoice = MinimaxAlphaBetaPruning(0, matrix, Integer.MIN_VALUE, Integer.MAX_VALUE);
 
@@ -25,10 +29,11 @@ public class TicTacToeAI {
 			matrix[(int)p.getX()][(int)p.getY()] = 'O';
 			holder = value(matrix, depth+1, alpha, beta);
 			eval2 = evaluate(matrix);
-			// printing for testing!
-			System.out.println("Value: "+holder);
-			pMatrix(matrix);
-			// end of printing!
+			
+			// // printing for testing!
+			// System.out.println("Value: "+holder);
+			// PrintMatrix(matrix);
+			// // end of printing!
 
 			if (max < holder || (max==holder && eval1 < eval2)) {
 				max = holder;
@@ -43,7 +48,7 @@ public class TicTacToeAI {
 		return best;
 
 	}
-	public void pMatrix(char[][] matrix){
+	public void PrintMatrix(char[][] matrix){
 
 		for (int i = 0; i < 3; i += 1){
 			for (int j = 0; j < 3; j += 1){

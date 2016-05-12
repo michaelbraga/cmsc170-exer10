@@ -9,8 +9,9 @@ public class TicTacToeUI extends JFrame {
 	JPanel myPanel = new JPanel();
 	JPanel optionPanel = new JPanel();
 	JButton button[][] = new JButton[3][3];
+	TicTacToe game;
 
-	public TicTacToeUI(){
+	public TicTacToeUI(TicTacToe game){
 
 		//initializing panel (frame)
 		super("TIC TAC TOE");
@@ -21,6 +22,8 @@ public class TicTacToeUI extends JFrame {
 		optionPanel.setLayout(new GridLayout(1,2));
 		add(myPanel, BorderLayout.CENTER);
 		add(optionPanel, BorderLayout.PAGE_END);
+
+		this.game = game;
 
 		// adding button
 		for(int i=0; i<3; i+=1){
@@ -38,7 +41,7 @@ public class TicTacToeUI extends JFrame {
 
 	public void initialize(){
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setSize(350, 400);
+		this.setSize(600, 600);
 		this.setVisible(true);
 		this.setLocationRelativeTo(null);
 	}
@@ -50,7 +53,10 @@ public class TicTacToeUI extends JFrame {
 				for(int i = 0 ; i < 3; i++){
 					for(int j = 0 ; j < 3; j++){
 						if(e.getSource() == button[i][j]){
-							button[i][j].setText("X");
+							if (button[i][j].getText() != "X" && button[i][j].getText() != "O") {
+								makeHumanMove(new Point(i, j));
+								informAI(i, j);
+							}
 						}
 					}
 				}
@@ -59,18 +65,41 @@ public class TicTacToeUI extends JFrame {
 		return click;
 	}
 
-	// public Point getPoint(ActionEvent e){
-	// 	Object source = e.getSource();
-	// 	for(int i = 0 ; i < 3; i++){
-	// 		for(int j = 0 ; j < 3; j++){
-	// 			if(source == button[i][j]){
-	// 				button[i][j].setText("X");
-	// 				return new Point(i,j);
-	// 			}
-	// 		}
-	// 	}
-	// 	return null;
-	// }
+	public void informAI(int x, int y){
+		this.game.computer.PrintMatrix(this.game.matrix);
+		
+		// check if winner
+		char result = TicTacToe.StillPlaying(this.game.matrix);
+		if (result != '-') {
+			switch (result) {
+				case 'X': System.out.println("You win!"); break;
+				case 'O': System.out.println("You lost, ew noob."); break;
+				case 'D': System.out.println("Game ends with a draw!"); break;
+			}
+		}
+			
+		Point move = this.game.computer.AnalyzeMatrix(this.game.matrix);
+		if(move!=null) makeComputerMove(move);
+
+		// check if winner		
+		result = TicTacToe.StillPlaying(this.game.matrix);
+		if (result != '-') {	
+			switch (result) {
+				case 'X': System.out.println("You win!"); break;
+				case 'O': System.out.println("You lost, ew noob."); break;
+				case 'D': System.out.println("Game ends with a draw!"); break;
+			}	
+		}
+	}
+
+	public void makeComputerMove(Point p){
+		this.button[(int)p.getX()][(int)p.getY()].setText("O");
+		this.game.matrix[(int)p.getX()][(int)p.getY()] = 'O';
+	}
+	public void makeHumanMove(Point p){
+		this.button[(int)p.getX()][(int)p.getY()].setText("X");
+		this.game.matrix[(int)p.getX()][(int)p.getY()] = 'X';
+	}
 
 	public int getPlayerOption(){
 		Object[] options = {"Me, ofcourse!", "Computer (ew, coward!)"};
@@ -85,6 +114,7 @@ public class TicTacToeUI extends JFrame {
 									);
 		return result;
 	}
+
 }
 
 /*
