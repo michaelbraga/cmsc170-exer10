@@ -14,15 +14,15 @@ public class TicTacToeUI extends JFrame {
 
 		//initializing panel (frame)
 		super("TIC TAC TOE");
-    	setLayout(new BorderLayout());
+		setLayout(new BorderLayout());
 		myPanel.setLayout(new GridLayout(3,3));
-        myPanel.setSize(350, 350);
-        myPanel.setBackground(Color.PINK);
-        optionPanel.setLayout(new GridLayout(1,2));
-        add(myPanel, BorderLayout.CENTER);
-        add(optionPanel, BorderLayout.PAGE_END);
+		myPanel.setSize(350, 350);
+		myPanel.setBackground(Color.PINK);
+		optionPanel.setLayout(new GridLayout(1,2));
+		add(myPanel, BorderLayout.CENTER);
+		add(optionPanel, BorderLayout.PAGE_END);
 
-        // adding button
+		// adding button
 		for(int i=0; i<3; i+=1){
 			for(int j=0; j<3; j+=1){
 				button[i][j] = new JButton();
@@ -34,6 +34,13 @@ public class TicTacToeUI extends JFrame {
 				myPanel.add(button[i][j]);
 			}
 		}
+	}
+
+	public void initialize(){
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setSize(350, 400);
+		this.setVisible(true);
+		this.setLocationRelativeTo(null);
 	}
 
 	public ActionListener addAction(){
@@ -65,9 +72,9 @@ public class TicTacToeUI extends JFrame {
 	// 	return null;
 	// }
 
-	public int getUserDialogBox(){
+	public int getPlayerOption(){
 		Object[] options = {"Me, ofcourse!", "Computer (ew, coward!)"};
-		int result = JOptionPane.showOptionDialog(myPanel, 
+		int result = JOptionPane.showOptionDialog(myPanel,
 										"Who should make the first move? #NoHugot",
 										"Things to ponder on",
 										JOptionPane.YES_NO_CANCEL_OPTION,

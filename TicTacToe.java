@@ -39,14 +39,10 @@ public class TicTacToe{
 	public int StartGame(){
 		TicTacToeAI computer = new TicTacToeAI();
 
-		// TicTacToeUI labelFrame = new TicTacToeUI();
-		// labelFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		// labelFrame.setSize(350, 400);
-		// labelFrame.setVisible(true);
-		// labelFrame.setLocationRelativeTo(null);
-		// int choice = labelFrame.getUserDialogBox();
+		TicTacToeUI labelFrame = new TicTacToeUI();
+		labelFrame.initialize();
+		int choice = labelFrame.getPlayerOption();
 
-		Scanner in = new Scanner(System.in);
 		int player;
 		char winner;
 
