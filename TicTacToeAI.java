@@ -10,7 +10,7 @@ public class TicTacToeAI {
 			return null;
 		}
 		Point bestChoice;
-		
+
 		// alpha beta minimax
 		bestChoice = MinimaxAlphaBetaPruning(0, matrix, Integer.MIN_VALUE, Integer.MAX_VALUE);
 
@@ -29,7 +29,8 @@ public class TicTacToeAI {
 			matrix[(int)p.getX()][(int)p.getY()] = 'O';
 			holder = value(matrix, depth+1, alpha, beta);
 			eval2 = evaluate(matrix);
-
+			System.out.println(holder + " " + eval2);
+			PrintMatrix(matrix);
 			if (max < holder || (max==holder && eval1 < eval2)) {
 				max = holder;
 				best = p;
@@ -179,11 +180,15 @@ public class TicTacToeAI {
 			else if((matrix[2][0]==move && matrix[1][1]==move && matrix[0][2]=='-'))
 				score += toAdd;
 
-			// check for blocking
-			for (int i=0; i<3; i+=3) {
-				score += checkForBlocking(matrix[i][0], matrix[i][1], matrix[i][2]);
-				score += checkForBlocking(matrix[0][i], matrix[1][i], matrix[2][i]);
+			char s = TicTacToe.StillPlaying(matrix);
+			if (s != '-' && s != 'D') {
+				score += (TicTacToe.StillPlaying(matrix) == 'O')? 100:-100;
 			}
+			// // check for blocking
+			// for (int i=0; i<3; i+=3) {
+			// 	score += checkForBlocking(matrix[i][0], matrix[i][1], matrix[i][2]);
+			// 	score += checkForBlocking(matrix[0][i], matrix[1][i], matrix[2][i]);
+			// }
 		}
 		return score;
 	}

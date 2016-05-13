@@ -12,7 +12,7 @@ public class TicTacToe{
 	TicTacToeAI computer;
 	static int HUMAN = -1024;
 	static int COMPUTER = 1024;
-	BufferedImage cat = null; 
+	BufferedImage cat = null;
 
 	public TicTacToe(){
 		InitializeMatrix();
@@ -29,7 +29,7 @@ public class TicTacToe{
 		labelFrame.initialize();
 
 		int player = labelFrame.getPlayerOption();
-		
+
 		if(player != 0){
 			int randMiddle = new Random().nextInt(3);
 			matrix[1][randMiddle] = 'O';
@@ -44,7 +44,7 @@ public class TicTacToe{
 				this.matrix[i][j] = '-';
 	}
 
-	
+
 
 	public static char StillPlaying(char[][] matrix){
 		// horizontal
