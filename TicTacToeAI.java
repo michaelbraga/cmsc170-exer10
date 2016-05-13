@@ -184,11 +184,11 @@ public class TicTacToeAI {
 			if (s != '-' && s != 'D') {
 				score += (TicTacToe.StillPlaying(matrix) == 'O')? 100:-100;
 			}
-			// // check for blocking
-			// for (int i=0; i<3; i+=3) {
-			// 	score += checkForBlocking(matrix[i][0], matrix[i][1], matrix[i][2]);
-			// 	score += checkForBlocking(matrix[0][i], matrix[1][i], matrix[2][i]);
-			// }
+			// check for blocking
+			for (int i=0; i<3; i+=3) {
+				score += checkForBlocking(matrix[i][0], matrix[i][1], matrix[i][2]);
+				score += checkForBlocking(matrix[0][i], matrix[1][i], matrix[2][i]);
+			}
 		}
 		return score;
 	}
