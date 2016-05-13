@@ -1,14 +1,16 @@
 import java.awt.*;
-import javax.swing.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import javax.imageio.ImageIO;
+import javax.swing.*;
+import javax.swing.border.*;
 
 /*
 *	Class for the Tic-Tac-Toe User Interface
 */
 public class TicTacToeUI extends JFrame {
+	JPanel mainFrame = new JPanel();
 	JPanel myPanel = new JPanel();
 	JPanel optionPanel = new JPanel();
 	JButton button[][] = new JButton[3][3];
@@ -27,24 +29,29 @@ public class TicTacToeUI extends JFrame {
 	public TicTacToeUI(TicTacToe game){
 		//initializing panel (frame)
 		super("TIC TAC TOE");
-		setLayout(new BorderLayout());
+		mainFrame.setLayout(new BorderLayout());
 		myPanel.setLayout(new GridLayout(3,3));
 		myPanel.setSize(350, 350);
 		myPanel.setBackground(Color.PINK);
 		optionPanel.setLayout(new GridLayout(1,2));
+		optionPanel.setBackground(Color.PINK);
+		optionPanel.setSize(100, 300);
 		add(myPanel, BorderLayout.CENTER);
-		add(optionPanel, BorderLayout.PAGE_END);
+		add(optionPanel, BorderLayout.SOUTH);
 
 		this.game = game;
 
 		JavaImageIOTest();
 		// adding button
+		Border border = new LineBorder(new Color(6,3,7), 5);
+
 		for(int i=0; i<3; i+=1){
 			for(int j=0; j<3; j+=1){
 				button[i][j] = new JButton();
+				button[i][j].setBorder(border);
 				button[i][j].setFont(new Font("Arial", Font.BOLD, 100));
 				button[i][j].setText("");
-				button[i][j].setBackground(new Color(0, 99,128));
+				button[i][j].setBackground(new Color(75, 88, 99));
 				button[i][j].setForeground(Color.WHITE);
 				button[i][j].addActionListener(addAction());
 				myPanel.add(button[i][j]);
@@ -92,7 +99,6 @@ public class TicTacToeUI extends JFrame {
 							JOptionPane.showMessageDialog(myPanel, "You lost, ew noob.");
 							break;
 				case 'D': System.out.println("Game ends with a draw!"); 
-							JOptionPane.showMessageDialog(myPanel, "game ends with a draw!");
 							break;
 			}
 		}
